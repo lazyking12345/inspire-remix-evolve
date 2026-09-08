@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 export function HeroSlider() {
   const [index, setIndex] = useState(0);
   const count = HERO_SLIDES.length;
+  const active: (typeof HERO_SLIDES)[number] = HERO_SLIDES[index] ?? HERO_SLIDES[0];
 
   const go = useCallback((next: number) => setIndex(((next % count) + count) % count), [count]);
 
@@ -36,12 +37,12 @@ export function HeroSlider() {
 
         <div className="relative mx-auto flex h-full max-w-7xl items-center px-6">
           <div className="max-w-2xl text-primary-foreground">
-            <span className="rule-label text-accent">{HERO_SLIDES[index].kicker}</span>
+            <span className="rule-label text-accent">{active.kicker}</span>
             <h1 className="mt-5 text-4xl leading-[1.08] font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-              {HERO_SLIDES[index].title}
+              {active.title}
             </h1>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-primary-foreground/85 sm:text-lg">
-              {HERO_SLIDES[index].body}
+              {active.body}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg" variant="secondary">

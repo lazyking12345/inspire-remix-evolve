@@ -29,13 +29,13 @@ export function EnquiryForm({ variant = "enrollment" }: { variant?: Variant }) {
     }
 
     const mobile = String(data.get("mobile") ?? "").replace(/\D/g, "");
-    if (!nextErrors.mobile && mobile.length < 10) {
-      nextErrors.mobile = "Enter a valid 10-digit mobile number";
+    if (!nextErrors["mobile"] && mobile.length < 10) {
+      nextErrors["mobile"] = "Enter a valid 10-digit mobile number";
     }
 
     const email = String(data.get("email") ?? "").trim();
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      nextErrors.email = "Enter a valid email address";
+      nextErrors["email"] = "Enter a valid email address";
     }
 
     setErrors(nextErrors);
@@ -82,13 +82,13 @@ export function EnquiryForm({ variant = "enrollment" }: { variant?: Variant }) {
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-5">
-      <Field label="Full name" name="name" error={errors.name} required>
+      <Field label="Full name" name="name" error={errors["name"]} required>
         <Input id="name" name="name" autoComplete="name" placeholder="Student or applicant name" />
       </Field>
 
       {variant === "enrollment" ? (
         <div className="grid gap-5 sm:grid-cols-2">
-          <Field label="Class applying for" name="studentClass" error={errors.studentClass} required>
+          <Field label="Class applying for" name="studentClass" error={errors["studentClass"]} required>
             <select id="studentClass" name="studentClass" className={selectClass} defaultValue="">
               <option value="">Select class</option>
               {CLASSES.map((c) => (
@@ -98,13 +98,13 @@ export function EnquiryForm({ variant = "enrollment" }: { variant?: Variant }) {
               ))}
             </select>
           </Field>
-          <BranchField error={errors.branch} selectClass={selectClass} />
+          <BranchField error={errors["branch"]} selectClass={selectClass} />
         </div>
       ) : null}
 
       {variant === "career" ? (
         <div className="grid gap-5 sm:grid-cols-2">
-          <BranchField error={errors.branch} selectClass={selectClass} label="Preferred branch" />
+          <BranchField error={errors["branch"]} selectClass={selectClass} label="Preferred branch" />
           <Field label="Role you are applying for" name="role">
             <Input id="role" name="role" placeholder="e.g. Mathematics teacher" />
           </Field>
@@ -112,13 +112,13 @@ export function EnquiryForm({ variant = "enrollment" }: { variant?: Variant }) {
       ) : null}
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Mobile number" name="mobile" error={errors.mobile} required>
+        <Field label="Mobile number" name="mobile" error={errors["mobile"]} required>
           <Input id="mobile" name="mobile" inputMode="tel" autoComplete="tel" placeholder="10-digit mobile" />
         </Field>
         <Field
           label="Email address"
           name="email"
-          error={errors.email}
+          error={errors["email"]}
           required={variant === "career"}
         >
           <Input id="email" name="email" type="email" autoComplete="email" placeholder="you@example.com" />
@@ -128,7 +128,7 @@ export function EnquiryForm({ variant = "enrollment" }: { variant?: Variant }) {
       <Field
         label={variant === "career" ? "Tell us about your experience" : "Your query or message"}
         name="message"
-        error={errors.message}
+        error={errors["message"]}
         required={variant === "contact"}
       >
         <Textarea id="message" name="message" rows={4} placeholder="How can we help?" />
@@ -149,9 +149,9 @@ function BranchField({
   selectClass,
   label = "Branch",
 }: {
-  error?: string;
+  error?: string | undefined;
   selectClass: string;
-  label?: string;
+  label?: string | undefined;
 }) {
   return (
     <Field label={label} name="branch" error={error} required>
@@ -176,8 +176,8 @@ function Field({
 }: {
   label: string;
   name: string;
-  error?: string;
-  required?: boolean;
+  error?: string | undefined;
+  required?: boolean | undefined;
   children: React.ReactNode;
 }) {
   return (
