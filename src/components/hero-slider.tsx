@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 export function HeroSlider() {
   const [index, setIndex] = useState(0);
   const count = HERO_SLIDES.length;
-  const active = HERO_SLIDES[index] ?? HERO_SLIDES[0]!;
+  const active: (typeof HERO_SLIDES)[number] = HERO_SLIDES[index] ?? HERO_SLIDES[0];
 
   const go = useCallback((next: number) => setIndex(((next % count) + count) % count), [count]);
 
