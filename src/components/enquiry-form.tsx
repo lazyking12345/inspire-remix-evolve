@@ -29,13 +29,13 @@ export function EnquiryForm({ variant = "enrollment" }: { variant?: Variant }) {
     }
 
     const mobile = String(data.get("mobile") ?? "").replace(/\D/g, "");
-    if (!nextErrors.mobile && mobile.length < 10) {
-      nextErrors.mobile = "Enter a valid 10-digit mobile number";
+    if (!nextErrors["mobile"] && mobile.length < 10) {
+      nextErrors["mobile"] = "Enter a valid 10-digit mobile number";
     }
 
     const email = String(data.get("email") ?? "").trim();
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      nextErrors.email = "Enter a valid email address";
+      nextErrors["email"] = "Enter a valid email address";
     }
 
     setErrors(nextErrors);
